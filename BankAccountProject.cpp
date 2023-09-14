@@ -8,20 +8,23 @@ protected:
     double balance;
 
 public:
-    Account(string number, double initialBalance) {
+    Account(string number, double initialBalance)
+    {
         accountNumber = number,
         balance = initialBalance;
     }
-
-    virtual void deposit(double amount) {
+    // Abstraction
+    virtual void deposit(double amount)
+    {
         if (amount > 0)
         {
             balance += amount;
             cout << "Deposited $" << amount << " into account " << accountNumber << endl;
         }
     }
-
-    virtual void withdraw(double amount) {
+    // Abstraction
+    virtual void withdraw(double amount)
+    {
         if (amount > 0 && balance >= amount)
         {
             balance -= amount;
@@ -32,31 +35,38 @@ public:
             cout << "Insufficient balance in account " << accountNumber << endl;
         }
     }
-
-    virtual void displayBalance() {
+    // Abstraction
+    virtual void displayBalance()
+    {
         cout << "Account " << accountNumber << " has a balance of $" << balance << endl;
     }
 };
 
+// Inheritance 
 class SavingsAccount : public Account
 {
+    //Encapsulation
+private:
     double interestRate;
 
-    public:
-        SavingsAccount(string number, double initialBalance, double rate) : Account(number, initialBalance)
-        {
-            interestRate = rate;
-        }
-
+public:
+    SavingsAccount(string number, double initialBalance, double rate) : Account(number, initialBalance)
+    {
+        interestRate = rate;
+    }
 };
 
+// Inheritance
 class CheckingAccount : public Account
 {
+
 public:
     CheckingAccount(string number, double initialBalance)
         : Account(number, initialBalance) {}
 
-    void withdraw(double amount) override {
+    // Polymorphism 
+    void withdraw(double amount) override
+    {
         // Allow overdraft up to $100
         if (amount > 0 && balance >= amount - 100)
         {
@@ -90,7 +100,6 @@ int main()
     account1->displayBalance();
     account2->displayBalance();
     cout << endl;
-
 
     return 0;
 }
